@@ -17,6 +17,7 @@ export class LoginBox extends React.Component<LoginBoxProps> {
         onChange={(value) => this.props.controller.username = value} />
       <TextInput type="password" value={this.props.controller.password}
         onChange={(value) => this.props.controller.password = value} />
+        <i className="fa fa-book"/>
       <button onClick={() => this.props.controller.login()}>Login</button>]
     </div>
   }
