@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { LoginBox, LoginBoxController } from './views/login/loginBox';
-import { initializeApp } from 'firebase'
+import { LoginBox, LoginBoxController } from './views/login/LoginBox';
+import { initializeApp } from 'firebase';
 
 var firebaseConfig = {
   apiKey: "AIzaSyC1RR_SpCmX8k0ZADiBezv9l5W51RkIe0I",
