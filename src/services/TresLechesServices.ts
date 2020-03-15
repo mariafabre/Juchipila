@@ -1,40 +1,35 @@
 import firebase from "firebase";
 import { Cookbook, User } from "./TresLechesModels";
 
-export class TresLechesServices {
-    private db: firebase.database.Database;
-    private user: User | undefined;
-    private userId: string = "";
-
+export class TresLechesServices { 
     private readonly cookbookRef: string = "cookbooks";
     private readonly usersRef: string = "users/";
 
-    constructor() {
-        this.db = firebase.database();        
-    }
-
-    async registerUser(email: string, password: string) {
+    async registerUser(email: string, password: string): Promise<User> {
         let userAuth = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        this.user = {userAuth: userAuth, cookbooksIds: []}
-        this.userId = userAuth.user?.uid || "";
-        this.db.ref(this.usersRef + this.userId).set({username: email});
+        let userId = userAuth.user?.uid || "";
+        firebase.database().ref(this.usersRef + userId).set({username: email});
+        return {userAuth: userAuth, cookbooksIds: []};
     }
 
-    async openUser(email: string, password: string) {
+    async signInUser(email: string, password: string): Promise<User> {
         let userAuth = await firebase.auth().signInWithEmailAndPassword(email, password);
-        this.user = {userAuth: userAuth, cookbooksIds: []}
-        this.userId = userAuth.user?.uid || "";
-        this.db.ref(this.usersRef + this.userId).once("value").then((snapshot: firebase.database.DataSnapshot) => {
+        let user = {userAuth: userAuth, cookbooksIds: []}
+        let userId = userAuth.user?.uid || "";
+        firebase.database().ref(this.usersRef + userId).once("value").then((snapshot: firebase.database.DataSnapshot) => {
             let cookbooksIds = snapshot.val().cookbooksIds;
-            if (this.user && cookbooksIds) {
-                this.user.cookbooksIds = cookbooksIds;
+            if (user && cookbooksIds) {
+                user.cookbooksIds = cookbooksIds;
             }            
         });
+        return user;
     }
 
-    addNewCookbook(cookbook: Cookbook): Promise<Cookbook> {
-        let cookbookKey = this.db.ref(this.cookbookRef).push({...cookbook}).key;
-        cookbookKey && this.user && this.user.cookbooksIds.push(cookbookKey);
-        return this.db.ref(this.usersRef + this.userId).update({cookbooksIds: this.user?.cookbooksIds}).then(() => cookbook);      
+    addNewCookbook(cookbook: Cookbook, user: User): Promise<Cookbook> {
+        let db = firebase.database();
+        let userId = user.userAuth.user?.uid || "";
+        let cookbookKey = db.ref(this.cookbookRef).push({...cookbook}).key;
+        cookbookKey && user && user.cookbooksIds.push(cookbookKey);
+        return db.ref(this.usersRef + userId).update({cookbooksIds: user.cookbooksIds}).then(() => cookbook);      
     }
 }
