@@ -2,9 +2,8 @@ import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { TextInput } from '../../components/inputs/TextInput';
-import { auth } from 'firebase';
 import { Cookbook } from '../../services/TresLechesModels';
-import { TresLechesServices } from '../../services/TresLechesServices';
+import { TresLechesSession } from '../../services/TresLechesSession';
 
 export interface LoginBoxProps {
   controller: LoginBoxController;
@@ -35,23 +34,18 @@ export class LoginBoxController {
   @observable public password: string = "";
   @observable public signed: boolean = false;
 
-  services: TresLechesServices;
-  constructor() {
-    this.services = new TresLechesServices();
-  }
-
   login() {
     console.log(this.username);
-    this.services.openUser(this.username, this.password).then(action(() => this.signed = true))
+    TresLechesSession.getInstance().signInUser(this.username, this.password).then(action(() => this.signed = true))
     .catch(action(() => this.signed = false));
   }
 
   register() {
-    this.services.registerUser(this.username, this.password).then(action(() => this.signed = true))
+    TresLechesSession.getInstance().registerUser(this.username, this.password).then(action(() => this.signed = true))
     .catch(action(() => this.signed = false));
   }
 
   addCookbook(): Promise<Cookbook> {
-    return this.services.addNewCookbook({name: "First cookbook", recipes: [], code: "FCB", id: "FCB"});
+    return TresLechesSession.getInstance().addNewCookbook({name: "First cookbook", recipes: [], code: "FCB", id: "FCB"});
   }
 }
