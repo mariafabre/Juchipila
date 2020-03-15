@@ -1,7 +1,10 @@
 import React from 'react';
 import './App.css';
-import { LoginBox, LoginBoxController } from './views/login/LoginBox';
+import { LoginBox, LoginBoxController } from './views/login/loginBox';
 import { initializeApp } from 'firebase';
+import { HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import { CookbookSum } from './views/CookbookSum/CookbookSum';
+import { TresLechesSession } from './services/TresLechesSession';
 
 var firebaseConfig = {
   apiKey: "AIzaSyC1RR_SpCmX8k0ZADiBezv9l5W51RkIe0I",
@@ -16,7 +19,9 @@ var firebaseConfig = {
 function App() {
   initializeApp(firebaseConfig);
   return (
-    <div className="App">
+    <Router>
+      <Switch>
+        <Route exact path="/" component={() => <div className="App">
       <div className="App-header">
         <div>
           <div className="title">Tres Leches:</div>
@@ -24,7 +29,12 @@ function App() {
         </div>
         <LoginBox controller={new LoginBoxController()}/>
       </div>
-    </div>
+    </div>}/>
+    <Route excat path ="/cookbook" component={() => TresLechesSession.getInstance().user ? <CookbookSum/> : <Redirect to="/"/>}/>
+      </Switch>
+      
+    </Router>
+    
   );
 }
 
