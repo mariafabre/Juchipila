@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { LoginBox, LoginBoxController } from './views/login/LoginBox';
 import { initializeApp } from 'firebase';
@@ -18,21 +17,13 @@ function App() {
   initializeApp(firebaseConfig);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React today
-        </a>
-      </header>
-      <LoginBox controller={new LoginBoxController()}/>
+      <div className="App-header">
+        <div>
+          <div className="title">Tres Leches:</div>
+          <div className="sub-title">The Collaborative Cookbook</div>
+        </div>
+        <LoginBox controller={new LoginBoxController()}/>
+      </div>
     </div>
   );
 }
