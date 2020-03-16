@@ -27,9 +27,7 @@ function App() {
         <Route exact path="/" component={() => <LandingView />}/>
         <Route excat path ="/cookbook" component={() => TresLechesSession.getInstance().user ? <CookbookSum/> : <Redirect to="/"/>}/>
       </Switch>
-      
     </Router>
-    
   );
 }
 

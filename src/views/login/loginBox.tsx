@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, action } from 'mobx';
+import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { TextInput } from '../../components/inputs/TextInput';
 import { TresLechesSession } from '../../services/TresLechesSession';
@@ -15,8 +15,8 @@ export class LoginBox extends React.Component<LoginBoxProps> {
   render() {
     return TresLechesSession.getInstance().user ? <Redirect to="/cookbook" /> : <div>
               <div className="form login" >
-                <TextInput type="email" id="loginBox" placeholder="E-mail" value={this.props.controller.username}
-                  onChange={(value) => this.props.controller.username = value} />
+                <TextInput type="email" id="loginBox" placeholder="E-mail" value={this.props.controller.email}
+                  onChange={(value) => this.props.controller.email = value} />
                 <br/>
                 <TextInput type="password" id="passwordBox" placeholder="Password" value={this.props.controller.password}
                   onChange={(value) => this.props.controller.password = value} />
@@ -28,13 +28,11 @@ export class LoginBox extends React.Component<LoginBoxProps> {
 }
 
 export class LoginBoxController {
-  @observable public username: string = "";
+  @observable public email: string = "";
   @observable public password: string = "";
-  @observable public signed: boolean = false;
 
   login() {
-    console.log(this.username);
-    TresLechesSession.getInstance().signInUser(this.username, this.password)
+    TresLechesSession.getInstance().signInUser(this.email, this.password);
   }
 
   // addCookbook(): Promise<Cookbook> {

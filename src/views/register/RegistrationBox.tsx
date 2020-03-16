@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, action, computed } from 'mobx';
+import { observable, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { TextInput } from '../../components/inputs/TextInput';
 import { TresLechesSession } from '../../services/TresLechesSession';
@@ -27,7 +27,7 @@ export class RegistrationBox extends React.Component<RegistrationBoxProps> {
                   <TextInput type="password" id="confirm-password" className={this.props.controller.isConfirmPasswordValid ? '' : 'error'} placeholder="Confirm Password" value={this.props.controller.confirmPassword}
                     onChange={(value) => this.props.controller.confirmPassword = value} />
                   <br/>
-                  <button onClick={() => this.props.controller.register()}>Register</button>
+                  <button disabled={!this.props.controller.canRegister} onClick={() => this.props.controller.register()}>Register</button>
               </div>
     </div>
   }
@@ -50,11 +50,16 @@ export class RegistrationBoxController {
   // }
 
   @computed
+  get canRegister(): boolean {
+    return this.password !== '' && this.username !== '' && this.isConfirmEmailValid && this.isConfirmPasswordValid;
+  }
+
+  @computed
   get isConfirmPasswordValid(): boolean {
     return this.password === this.confirmPassword;
   }
 
   register() {
-    this.isConfirmEmailValid && this.isConfirmPasswordValid && TresLechesSession.getInstance().registerUser(this.username, this.password);
+    TresLechesSession.getInstance().registerUser(this.username, this.password);
   }
 }

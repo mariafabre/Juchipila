@@ -3,8 +3,8 @@ import { action } from 'mobx';
 
 export interface TextInputProps {
   type: string;
-  placeholder?: string;
   onChange: (value: string) => void;  
+  placeholder?: string;
   value?: string;
   pattern?: string;
   className?: string;
