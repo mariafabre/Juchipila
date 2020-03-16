@@ -3,6 +3,7 @@ import { observable, action, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { TextInput } from '../../components/inputs/TextInput';
 import { TresLechesSession } from '../../services/TresLechesSession';
+import { Redirect } from 'react-router-dom';
 
 export interface RegistrationBoxProps {
   controller: RegistrationBoxController;
@@ -12,7 +13,7 @@ export interface RegistrationBoxProps {
 export class RegistrationBox extends React.Component<RegistrationBoxProps> {
 
   render() {
-    return <div>
+    return this.props.controller.signed ? <Redirect to="/cookbook" /> :  <div>
                 <div className="form register">
                   <TextInput type="email" id="email" placeholder="E-mail" value={this.props.controller.username}
                     onChange={(value) => this.props.controller.username = value} />
