@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #fff5d0;
 }
 
 .App-logo {
@@ -14,7 +15,6 @@
 }
 
 .App-header {
-  background-color: #fff5d0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -34,6 +34,11 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.error {
+  color: red;
+  border: 1px solid red;
 }
 
 @keyframes App-logo-spin {

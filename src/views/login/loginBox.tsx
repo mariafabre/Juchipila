@@ -15,16 +15,18 @@ export class LoginBox extends React.Component<LoginBoxProps> {
 
   render() {
     return <div>
-      {this.props.controller.signed && <div> Congrats </div>}
-      <TextInput type="email" value={this.props.controller.username}
-        onChange={(value) => this.props.controller.username = value} />
-      <TextInput type="password" value={this.props.controller.password}
-        onChange={(value) => this.props.controller.password = value} />
-        <i className="fa fa-book"/>
-      <button onClick={() => this.props.controller.login()}>Login</button>
-      <button onClick={() => this.props.controller.register()}>Register</button>
-      <button onClick={() => this.props.controller.addCookbook().then(action((cb) => this.cookbook = cb))}>Cookbook</button>
-      {this.cookbook && this.cookbook.name}
+              <div className="form login" >
+                <TextInput type="email" id="loginBox" placeholder="E-mail" value={this.props.controller.username}
+                  onChange={(value) => this.props.controller.username = value} />
+                <br/>
+                <TextInput type="password" id="passwordBox" placeholder="Password" value={this.props.controller.password}
+                  onChange={(value) => this.props.controller.password = value} />
+                <br/>
+                <button onClick={() => this.props.controller.login()}>Login</button>
+              </div>
+              {/* {this.props.controller.signed && <div> Congrats </div>} */}
+              {/* <button onClick={() => this.props.controller.addCookbook().then(action((cb) => this.cookbook = cb))}>Cookbook</button> */}
+              {this.cookbook && this.cookbook.name}
     </div>
   }
 }
@@ -33,6 +35,7 @@ export class LoginBoxController {
   @observable public username: string = "";
   @observable public password: string = "";
   @observable public signed: boolean = false;
+  @observable public showLogin: boolean = true;
 
   login() {
     console.log(this.username);
@@ -40,11 +43,9 @@ export class LoginBoxController {
     .catch(action(() => this.signed = false));
   }
 
-  register() {
-    TresLechesSession.getInstance().registerUser(this.username, this.password).then(action(() => this.signed = true))
-    .catch(action(() => this.signed = false));
-  }
+  goToReg() {
 
+  }
   addCookbook(): Promise<Cookbook> {
     return TresLechesSession.getInstance().addNewCookbook({name: "First cookbook", recipes: [], code: "FCB", id: "FCB"});
   }
