@@ -13,7 +13,7 @@ export interface RegistrationBoxProps {
 export class RegistrationBox extends React.Component<RegistrationBoxProps> {
 
   render() {
-    return this.props.controller.signed ? <Redirect to="/cookbook" /> :  <div>
+    return TresLechesSession.getInstance().user ? <Redirect to="/cookbook" /> :  <div>
                 <div className="form register">
                   <TextInput type="email" id="email" placeholder="E-mail" value={this.props.controller.username}
                     onChange={(value) => this.props.controller.username = value} />
@@ -21,7 +21,7 @@ export class RegistrationBox extends React.Component<RegistrationBoxProps> {
                     <TextInput type="email" id="confirm-email" className={this.props.controller.isConfirmEmailValid ? '' : 'error'} placeholder="Confirm E-mail"
                     onChange={(value) => this.props.controller.confirmUsername = value} />
                   <br/>
-                  <TextInput type="password" id="password" placeholder="Password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" value={this.props.controller.password}
+                  <TextInput type="password" id="password" placeholder="Password" value={this.props.controller.password}
                     onChange={(value) => this.props.controller.password = value} />
                   <br/>
                   <TextInput type="password" id="confirm-password" className={this.props.controller.isConfirmPasswordValid ? '' : 'error'} placeholder="Confirm Password" value={this.props.controller.confirmPassword}
@@ -37,9 +37,7 @@ export class RegistrationBoxController {
   @observable public username: string = "";
   @observable public confirmUsername: string = "";
   @observable public password: string = "";
-  @observable public confirmPassword: string = ""
-  @observable public signed: boolean = false;
-  @observable public showLogin: boolean = true;
+  @observable public confirmPassword: string = "";
 
   @computed
   get isConfirmEmailValid(): boolean {
@@ -57,7 +55,6 @@ export class RegistrationBoxController {
   }
 
   register() {
-    this.isConfirmEmailValid && this.isConfirmPasswordValid && TresLechesSession.getInstance().registerUser(this.username, this.password).then(action(() => this.signed = true))
-    .catch(action(() => this.signed = false));
+    this.isConfirmEmailValid && this.isConfirmPasswordValid && TresLechesSession.getInstance().registerUser(this.username, this.password);
   }
 }

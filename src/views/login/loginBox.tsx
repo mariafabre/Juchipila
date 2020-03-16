@@ -2,9 +2,8 @@ import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { TextInput } from '../../components/inputs/TextInput';
-import { Cookbook } from '../../services/TresLechesModels';
 import { TresLechesSession } from '../../services/TresLechesSession';
-import { useHistory, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export interface LoginBoxProps {
   controller: LoginBoxController;
@@ -12,10 +11,9 @@ export interface LoginBoxProps {
 
 @observer
 export class LoginBox extends React.Component<LoginBoxProps> {
-  @observable cookbook: Cookbook | undefined;
 
   render() {
-    return this.props.controller.signed ? <Redirect to="/cookbook" /> : <div>
+    return TresLechesSession.getInstance().user ? <Redirect to="/cookbook" /> : <div>
               <div className="form login" >
                 <TextInput type="email" id="loginBox" placeholder="E-mail" value={this.props.controller.username}
                   onChange={(value) => this.props.controller.username = value} />
@@ -25,9 +23,6 @@ export class LoginBox extends React.Component<LoginBoxProps> {
                 <br/>
                 <button onClick={() => this.props.controller.login()}>Login</button>
               </div>
-              {/* {this.props.controller.signed && <div> Congrats </div>} */}
-              {/* <button onClick={() => this.props.controller.addCookbook().then(action((cb) => this.cookbook = cb))}>Cookbook</button> */}
-              {this.cookbook && this.cookbook.name}
     </div>
   }
 }
@@ -36,18 +31,13 @@ export class LoginBoxController {
   @observable public username: string = "";
   @observable public password: string = "";
   @observable public signed: boolean = false;
-  @observable public showLogin: boolean = true;
 
   login() {
     console.log(this.username);
-    TresLechesSession.getInstance().signInUser(this.username, this.password).then(action(() => this.signed = true))
-    .catch(action(() => this.signed = false));
+    TresLechesSession.getInstance().signInUser(this.username, this.password)
   }
 
-  goToReg() {
-
-  }
-  addCookbook(): Promise<Cookbook> {
-    return TresLechesSession.getInstance().addNewCookbook({name: "First cookbook", recipes: [], code: "FCB", id: "FCB"});
-  }
+  // addCookbook(): Promise<Cookbook> {
+  //   return TresLechesSession.getInstance().addNewCookbook({name: "First cookbook", recipes: [], code: "FCB", id: "FCB"});
+  // }
 }
