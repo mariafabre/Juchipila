@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { TextInput } from '../../components/inputs/TextInput';
 import { Cookbook } from '../../services/TresLechesModels';
 import { TresLechesSession } from '../../services/TresLechesSession';
+import { useHistory, Redirect } from 'react-router-dom';
 
 export interface LoginBoxProps {
   controller: LoginBoxController;
@@ -14,7 +15,7 @@ export class LoginBox extends React.Component<LoginBoxProps> {
   @observable cookbook: Cookbook | undefined;
 
   render() {
-    return <div>
+    return this.props.controller.signed ? <Redirect to="/cookbook" /> : <div>
               <div className="form login" >
                 <TextInput type="email" id="loginBox" placeholder="E-mail" value={this.props.controller.username}
                   onChange={(value) => this.props.controller.username = value} />

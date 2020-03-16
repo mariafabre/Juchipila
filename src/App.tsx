@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
-import { LoginBox, LoginBoxController } from './views/login/LoginBox';
+import { LoginBox, LoginBoxController } from './views/login/loginBox';
 import { initializeApp } from 'firebase';
 import { RegistrationBox, RegistrationBoxController } from './views/register/RegistrationBox';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
+import { HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import { CookbookSum } from './views/CookbookSum/CookbookSum';
+import { TresLechesSession } from './services/TresLechesSession';
 
 var firebaseConfig = {
   apiKey: "AIzaSyC1RR_SpCmX8k0ZADiBezv9l5W51RkIe0I",
@@ -19,9 +22,14 @@ var firebaseConfig = {
 function App() {
   initializeApp(firebaseConfig);
   return (
-    <div className="App">
-      <LandingView />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={() => <LandingView />}/>
+        <Route excat path ="/cookbook" component={() => TresLechesSession.getInstance().user ? <CookbookSum/> : <Redirect to="/"/>}/>
+      </Switch>
+      
+    </Router>
+    
   );
 }
 
@@ -35,7 +43,7 @@ export class LandingView extends React.Component {
     this.registrationBoxController = new RegistrationBoxController();
   }
   render() {
-    return <div>
+    return <div className="App">
       <button onClick={action(() => this.showLogin = !this.showLogin)}>{this.showLogin ? "Registration" : "Back To Login"}</button>
       <div className="App-header">
         <div>
