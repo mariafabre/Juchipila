@@ -1,11 +1,12 @@
 import firebase from "firebase";
 import { TresLechesServices } from "./TresLechesServices";
 import { User, Cookbook } from "./TresLechesModels";
+import { observable, runInAction } from "mobx";
 
 export class TresLechesSession {
     private static instance: TresLechesSession;
     public db: firebase.database.Database;
-    public user: User | undefined;
+    @observable public user: User | undefined;
     public services: TresLechesServices;
 
     private constructor() {
@@ -21,7 +22,7 @@ export class TresLechesSession {
     }
 
     public async signInUser(email: string, password: string) {
-        this.user = await this.services.signInUser(email, password);
+        runInAction(async () => this.user = await this.services.signInUser(email, password));
     }
 
     public async registerUser(email: string, password: string) {
