@@ -2,15 +2,15 @@ import React from 'react';
 import { action } from 'mobx';
 
 export interface TextInputProps {
-  type: string;
   onChange: (value: string) => void;
-  onKeyPress?: (key: number) => void; 
-  placeholder?: string;
+  placeholder?: string;  
+  type?: string;
   value?: string;
   pattern?: string;
   className?: string;
   style?: React.CSSProperties;
   id?: string;
+  list?: string;
 }
 
 export class TextInput extends React.Component<TextInputProps> {

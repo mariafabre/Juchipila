@@ -1,6 +1,6 @@
 :root {
     --blue: #5f9ea0;
-    --light-blue: #f0f8ff;
+    --light-blue: #b7cbdb;
     --green: #90ee90;
     --light-green: #98fb98;
     --pink: #e9967a;
@@ -10,8 +10,21 @@
     --red: #cd5c5c;
     --light-red: #ffb6c1;
     --white: #fffaf0;
+    --black: #292727;
 }
 
 .dark-mode {
     --primary: var(--blue);
+}
+
+input {
+    width: 12em;
+    border-radius: 5px;
+    padding: 5px;
+    outline: none;
+    margin-right: 10px;
+}
+
+.converter-dlg {
+    width: fit-content;
 }

@@ -1,3 +1,5 @@
+import { LiquidUnitEnum, SolidUnitEnum } from "../views/utils/ConversionUtils";
+
 export interface BaseObject {
     id: string;
     name: string;
@@ -25,7 +27,7 @@ export interface Version extends BaseObject {
 
 export interface Ingredient extends BaseObject {
     quantity: number;
-    unit: UnitEnum;
+    unit: LiquidUnitEnum | SolidUnitEnum;
 }
 
 export interface DrinkParing extends BaseObject {
@@ -35,19 +37,4 @@ export interface DrinkParing extends BaseObject {
 export interface User {
     cookbooksIds: string[];
     userAuth: firebase.auth.UserCredential;
-}
-
-export enum UnitEnum {
-    PINCH,
-    TEASPOON,
-    TABLESPOON,
-    FLUID_OUNCE,
-    CUP,
-    PINT,
-    QUART,
-    GALLON,
-    MILLIGRAM,
-    MILLILITER,
-    LITER,
-    GRAM
 }

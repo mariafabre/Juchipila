@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './stylesheets/General.css';
 import { LoginBox, LoginBoxController } from './views/login/loginBox';
 import { initializeApp } from 'firebase';
 import { RegistrationBox, RegistrationBoxController } from './views/register/RegistrationBox';
@@ -9,6 +10,8 @@ import { HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import { CookbookSum } from './views/CookbookSum/CookbookSum';
 import { TresLechesSession } from './services/TresLechesSession';
 import { Home } from './views/home/Home';
+import { IconSources, Icon } from './components/Icon';
+import { ConverterController, Converter } from './views/Converter/Converter';
 
 var firebaseConfig = {
   apiKey: "AIzaSyC1RR_SpCmX8k0ZADiBezv9l5W51RkIe0I",
@@ -36,6 +39,9 @@ function App() {
 @observer
 export class LandingView extends React.Component {
   @observable showLogin: boolean = true;
+  @observable originalIcon: boolean = true;
+
+  converterMx = new ConverterController();
   loginBoxController: LoginBoxController | undefined;
   registrationBoxController: RegistrationBoxController | undefined;
   componentWillMount() {
@@ -44,17 +50,21 @@ export class LandingView extends React.Component {
   }
   render() {
     return <div className="App">
-      <button onClick={action(() => this.showLogin = !this.showLogin)}>{this.showLogin ? "Registration" : "Back To Login"}</button>
       <div className="App-header">
+      <button onClick={action(() => this.showLogin = !this.showLogin)}>{this.showLogin ? "Registration" : "Back To Login"}</button>
         <div>
           <div className="title">Tres Leches:</div>
           <div className="sub-title">The Collaborative Cookbook</div>
+          <Icon className="logo" name={this.originalIcon ? "logoBW" : "logoV2"} onClick={action(() => this.originalIcon = !this.originalIcon)} source={IconSources.ASSETS}/>
         </div>
         <div>
           {this.showLogin ?
             <LoginBox controller={this.loginBoxController || new LoginBoxController()} /> :
             <RegistrationBox controller={this.registrationBoxController || new RegistrationBoxController()} />}
         </div>
+        <button onClick={() => Converter.displayDialog(this.converterMx)}>
+          <Icon source={IconSources.FONTAWESOME} name="fa fa-calculator"/>
+        </button>
       </div>
     </div>
   }

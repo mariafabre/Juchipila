@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.AppWrapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.App,
+.AppOverlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.AppOverlay {
+  z-index: 100;
+  pointer-events: none;
+}
