@@ -1,10 +1,12 @@
 
 import React from 'react';
+import './Converter.css';
 import { observable, action, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { LiquidUnitEnum, SolidUnitEnum, ConversionUtils } from '../utils/ConversionUtils';
 import { TextInput } from '../../components/inputs/TextInput';
 import { DialogManager } from '../../components/dialog/AppOverlay';
+import { IconSources, Icon } from '../../components/Icon';
 
 export class ConverterController {  
     @observable liquidAmountFrom: number = 1;
@@ -56,30 +58,50 @@ export class ConverterController {
       ConversionUtils.liquidConversionMap.forEach((conversion, unit) => liquidOptions.push(<option key={unit} value={unit} />));
   
       return <div>
-        <label>Liquid Converter</label>
-        <div>
-        <input value={this.props.controller.liquidAmountFrom} onChange={action((event) => this.props.controller.liquidAmountFrom = (event.target.value as any))} />
-          <TextInput value={this.props.controller.fromLiquidUnit} onChange={action((value) => this.props.controller.fromLiquidUnit = value as any)} list="liquidUnits" />
-          <input value={this.liquidResult} />
-          <TextInput value={this.props.controller.toLiquidUnit} onChange={action((value) => this.props.controller.toLiquidUnit = value as any)} list="liquidUnits" />
-          <datalist id="liquidUnits">
+        <div className="converter-row-1">
+          <div className="converter-column-1"></div>
+          <div className="converter-column-2">
+            FROM
+          </div>
+          <div className="converter-column-3">
+            TO
+          </div>
+        </div>
+        <div className="converter-row-2">
+          <div className="converter-column-1">
+            <Icon source={IconSources.FONTAWESOME} name="fa fa-beer"/>
+          </div>
+          <div className="converter-column-2">
+            <input className="number-input" value={this.props.controller.liquidAmountFrom} onChange={action((event) => this.props.controller.liquidAmountFrom = (event.target.value as any))} />
+            <TextInput value={this.props.controller.fromLiquidUnit} onChange={action((value) => this.props.controller.fromLiquidUnit = value as any)} list="liquidUnits" />
+          </div>
+          <div className="converter-column-3">
+            <TextInput value={this.props.controller.toLiquidUnit} onChange={action((value) => this.props.controller.toLiquidUnit = value as any)} list="liquidUnits" />
+            <div className="result">{this.liquidResult.toPrecision(4)}</div>
+          </div>
+        </div>
+        <datalist id="liquidUnits">
             {liquidOptions}
           </datalist>
+        <div className="converter-row-3">
+          <div className="converter-column-1">
+            <Icon source={IconSources.FONTAWESOME} name="fa fa-balance-scale"/>
+          </div>
+          <div className="converter-column-2">
+            <input className="number-input" value={this.props.controller.solidAmountFrom} onChange={action((event) => this.props.controller.solidAmountFrom = (event.target.value as any))} />
+            <TextInput value={this.props.controller.fromSolidUnit} onChange={action((value) => this.props.controller.fromSolidUnit = value as any)} list="solidUnitsFrom" />
+          </div>            
+          <div className="converter-column-3">
+            <TextInput value={this.props.controller.toSolidUnit} onChange={action((value) => this.props.controller.toSolidUnit = value as any)} list="solidUnitsTo" />
+            <div className="result">{this.solidResult.toPrecision(4)}</div>
+          </div>
         </div>
-  
-        <label>Solid Converter</label>
-        <div>
-        <input value={this.props.controller.solidAmountFrom} onChange={action((event) => this.props.controller.solidAmountFrom = (event.target.value as any))} />
-          <TextInput value={this.props.controller.fromSolidUnit} onChange={action((value) => this.props.controller.fromSolidUnit = value as any)} list="solidUnitsFrom" />
-          <input value={this.solidResult} />
-          <TextInput value={this.props.controller.toSolidUnit} onChange={action((value) => this.props.controller.toSolidUnit = value as any)} list="solidUnitsTo" />
-          <datalist id="solidUnitsFrom">
+        <datalist id="solidUnitsFrom">
             {this.solidFromOptions}
           </datalist>
           <datalist id="solidUnitsTo">
             {this.solidToOptions}
           </datalist>
-        </div>
       </div>
     }
   }
