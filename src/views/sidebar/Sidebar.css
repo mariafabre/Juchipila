@@ -1,0 +1,6 @@
+.sidebar {
+  width: 200px;
+  margin: 0 16px;
+  border: 1px solid black;
+  justify-content: center;
+}

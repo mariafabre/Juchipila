@@ -13,7 +13,7 @@ export interface LoginBoxProps {
 export class LoginBox extends React.Component<LoginBoxProps> {
 
   render() {
-    return TresLechesSession.getInstance().user ? <Redirect to="/cookbook" /> : <div>
+    return TresLechesSession.getInstance().user ? <Redirect to="/home" /> : <div>
               <div className="form login" >
                 <TextInput type="email" id="loginBox" placeholder="E-mail" value={this.props.controller.email}
                   onChange={(value) => this.props.controller.email = value} />

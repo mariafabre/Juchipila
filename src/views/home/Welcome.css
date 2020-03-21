@@ -1,0 +1,17 @@
+.welcome {
+  width: fit-content;
+}
+
+.welcome-panel {
+  border: 1px solid black;
+}
+
+.welcome-panel ul {
+  padding: 0px;
+}
+
+.welcome-panel ul li {
+  display: inline-flex;
+  margin: 16px;
+  justify-content: space-evenly;
+}

@@ -1,0 +1,34 @@
+.card {
+  color: black;
+  background-color: rgb(209, 209, 209);
+  border: 1px solid rgb(160, 160, 160);
+  max-width: 200px;
+  min-width: 200px;
+  min-height: 175px;
+}
+
+.floating {
+  box-shadow: 2px 2px 10px #888888;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.card-desc {
+  margin-top: 5px;
+  padding: 5px;
+  background-color: white;
+  font-size: 12px;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.card-stats {
+  margin-left: 20px;
+  font-size: 10px;
+}

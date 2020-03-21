@@ -8,6 +8,7 @@ import { observer } from 'mobx-react';
 import { HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import { CookbookSum } from './views/CookbookSum/CookbookSum';
 import { TresLechesSession } from './services/TresLechesSession';
+import { Home } from './views/home/Home';
 
 var firebaseConfig = {
   apiKey: "AIzaSyC1RR_SpCmX8k0ZADiBezv9l5W51RkIe0I",
@@ -25,7 +26,8 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={() => <LandingView />}/>
-        <Route excat path ="/cookbook" component={() => TresLechesSession.getInstance().user ? <CookbookSum/> : <Redirect to="/"/>}/>
+        <Route excat path ="/home" component={() => TresLechesSession.getInstance().user ? <Home/> : <Redirect to="/"/>}/>
+        <Route excat path ="/cookbook/:id" component={() => TresLechesSession.getInstance().user ? <CookbookSum/> : <Redirect to="/"/>}/>
       </Switch>
     </Router>
   );
