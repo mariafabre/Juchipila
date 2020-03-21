@@ -3,6 +3,7 @@ import { action } from 'mobx';
 
 export interface TextInputProps {
   onChange: (value: string) => void;
+  onKeyPress?: (key: number) => void; 
   placeholder?: string;  
   type?: string;
   value?: string;

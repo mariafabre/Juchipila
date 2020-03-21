@@ -1,6 +1,6 @@
 import React from 'react';
 import './Card.css';
-import { Icon, IconSources, IconIDs } from '../Icon';
+import { Icon, IconSources } from '../Icon';
 
 
 export enum CardTypes {
@@ -30,7 +30,7 @@ export class Card extends React.Component<CardProps> {
     return <div className={comuptedClass} onClick={this.props.onClick}>
       {this.props.title ? <div className="card-title">{this.props.title}</div> : null}
       {this.props.description ? <div className="card-desc">{this.props.description}</div> : null}
-      {this.props.image ? <Icon source={IconSources.ASSETS} name={IconIDs.LOGO} /> : null}
+      {this.props.image ? <Icon source={IconSources.ASSETS} name="logo" /> : null}
       {this.props.stats ? <div className="card-stats">{this.props.stats}</div> : null}
     </div>
   }
