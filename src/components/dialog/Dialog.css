@@ -1,0 +1,25 @@
+.dialog {
+    border: 1px solid var(--light-blue);
+    padding: 0;
+    border-radius: 5px;
+    pointer-events: all;
+    background: var(--white);
+    position: absolute;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--light-blue);
+    padding: 5px;
+}
+
+.dialog-header i {
+    padding-right: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.dialog-content {
+    padding: 5px;
+}

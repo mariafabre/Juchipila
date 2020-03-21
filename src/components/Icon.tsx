@@ -1,35 +1,39 @@
 import React from 'react';
 import logo from '../assets/images/logo.png';
+import logoBW from '../assets/images/logoBW.png';
+import logoV2 from '../assets/images/logoV2.png';
+
 
 export enum IconSources {
     FONTAWESOME,
     ASSETS
 }
 
-export enum IconIDs {
-    LOGO = "logo",
-    BOOK = "fa fa-book"
-}
-
 export interface IconProps {
-    name: IconIDs;
-    source: IconSources
+    name: string;
+    source: IconSources;
+    className?: string;
+    onClick?: () => void;
 }
 
 export class Icon extends React.Component<IconProps> {
     get image(): string {
         switch (this.props.name) {
-            case IconIDs.LOGO:
+            case "logo":
                 return logo;
+            case "logoBW":
+                return logoBW;
+            case "logoV2":
+                return logoV2;
         }
         return "";
     }
     render() {
         switch(this.props.source) {
             case IconSources.FONTAWESOME:
-                return <i className={this.props.name}/>
+                return <i onClick={this.props.onClick} className={this.props.className + " " + this.props.name}/>;
             case IconSources.ASSETS:
-                return <img src={this.image}/>;
+                return <img {...this.props} src={this.image} alt={this.props.className}/>;
         }
     }
 }
