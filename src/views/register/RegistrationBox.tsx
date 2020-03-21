@@ -13,7 +13,7 @@ export interface RegistrationBoxProps {
 export class RegistrationBox extends React.Component<RegistrationBoxProps> {
 
   render() {
-    return TresLechesSession.getInstance().user ? <Redirect to="/cookbook" /> :  <div>
+    return TresLechesSession.getInstance().user ? <Redirect to="/home" /> :  <div>
                 <div className="form register">
                   <TextInput type="email" id="email" placeholder="E-mail" value={this.props.controller.username}
                     onChange={(value) => this.props.controller.username = value} />

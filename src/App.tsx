@@ -7,8 +7,8 @@ import { RegistrationBox, RegistrationBoxController } from './views/register/Reg
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import { CookbookSum } from './views/CookbookSum/CookbookSum';
 import { TresLechesSession } from './services/TresLechesSession';
+import { Home } from './views/home/Home';
 import { IconSources, Icon } from './components/Icon';
 import { ConverterController, Converter } from './views/Converter/Converter';
 
@@ -28,7 +28,8 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={() => <LandingView />}/>
-        <Route excat path ="/cookbook" component={() => TresLechesSession.getInstance().user ? <CookbookSum/> : <Redirect to="/"/>}/>
+        <Route excat path ="/home" component={() => TresLechesSession.getInstance().user ? <Home/> : <Redirect to="/"/>}/>
+        <Route excat path ="/cookbook/:id" component={() => TresLechesSession.getInstance().user ? <Home/> : <Redirect to="/"/>}/>
       </Switch>
     </Router>
   );
