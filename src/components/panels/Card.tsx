@@ -11,8 +11,8 @@ export enum CardTypes {
 
 export interface CardProps {
   id?: string;
-  type?: CardTypes;
-  image?: string; //TODO
+  type?: CardTypes; //todo
+  image?: string;
   title?: string;
   description?: string;
   className?: string;
@@ -24,10 +24,10 @@ export interface CardProps {
 
 export class Card extends React.Component<CardProps> {
   render() {
-    let comuptedClass = this.props.className ? this.props.className : 'card';
-    comuptedClass = this.props.type ? `${comuptedClass} ${this.props.type}` :  comuptedClass;
-    comuptedClass = this.props.flat ? `${comuptedClass} ${'flat'}` : `${comuptedClass} ${'floating'}`;
-    return <div className={comuptedClass} onClick={this.props.onClick}>
+    let computedClass = this.props.className ? this.props.className : 'card';
+    computedClass = this.props.type ? `${computedClass} ${this.props.type}` :  computedClass;
+    computedClass = this.props.flat ? `${computedClass} ${'flat'}` : `${computedClass} ${'floating'}`;
+    return <div className={computedClass} onClick={this.props.onClick}>
       {this.props.title ? <div className="card-title">{this.props.title}</div> : null}
       {this.props.description ? <div className="card-desc">{this.props.description}</div> : null}
       {this.props.image ? <Icon source={IconSources.ASSETS} name="logo" /> : null}
