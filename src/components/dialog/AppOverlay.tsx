@@ -1,15 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog, { DialogProps } from './Dialog';
+import { observable, action } from 'mobx';
+import { Observer } from 'mobx-react';
 
 function AppOverlay() {
-    return <div id="AppOverlay" className="AppOverlay" 
-    onDragOver={(event) => event.preventDefault()}/>;
+    return <Observer>
+        {() => <div id="AppOverlay" className="AppOverlay"
+            onDragOver={(event) => event.preventDefault()}>
+                {DialogManager.getManager().dialogs}
+                </div>}
+    </Observer>;
 }
 
 export class DialogManager {
-    static openDialog(props: DialogProps) {
-        ReactDOM.render(<Dialog {...props}/>, document.getElementById('AppOverlay'));
+    private static manager: DialogManager;
+    @observable dialogs: React.ReactNode[] = [];
+
+    private constructor() {
+    }
+
+    public static getManager(): DialogManager {
+        if (!DialogManager.manager) {
+            DialogManager.manager = new DialogManager();
+        }
+        return DialogManager.manager;
+    }
+
+    @action
+    openDialog(props: DialogProps) {
+        this.dialogs.push(<Dialog {...props}/>);
     }
 }
 

@@ -7,6 +7,7 @@ import { LiquidUnitEnum, SolidUnitEnum, ConversionUtils } from '../utils/Convers
 import { TextInput } from '../../components/inputs/TextInput';
 import { DialogManager } from '../../components/dialog/AppOverlay';
 import { IconSources, Icon } from '../../components/Icon';
+import Dialog from '../../components/dialog/Dialog';
 
 export class ConverterController {  
     @observable liquidAmountFrom: number = 1;
@@ -24,7 +25,7 @@ export class ConverterController {
   export class Converter extends React.Component<{controller: ConverterController}> { 
 
     static displayDialog(controller: ConverterController) {
-      DialogManager.openDialog({title: "Unit Converter", className: "converter-dlg", content: <Converter controller={controller}/>})
+      DialogManager.getManager().openDialog({title: "Unit Converter", className: "converter-dlg", content: <Converter controller={controller}/>, key: "converter"})
     }
   
     @computed 

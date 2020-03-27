@@ -14,7 +14,6 @@ export interface IconProps {
 }
 
 export class Icon extends React.Component<IconProps> {
-
     render() {
         switch(this.props.source) {
             case IconSources.FONTAWESOME:

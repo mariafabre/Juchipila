@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import { Icon, IconSources } from '../Icon';
 
 export interface DialogProps {
+    key?: string;
     title?: string;
     onClose?: () => void;
     content?: React.ReactElement;
