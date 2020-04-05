@@ -8,6 +8,7 @@ import { Cookbook } from '../../services/TresLechesModels';
 
 export interface EditCookbookProps {
   editCookbookController: EditCookbookController;
+  onCommit?: (cookbook: Cookbook) => void;
 }
 
 @observer
@@ -27,8 +28,14 @@ export class EditCookbook extends React.Component<EditCookbookProps> {
       <label>Code:</label><TextInput placeholder="Three Character Code"
         value={this.props.editCookbookController.code || this.props.editCookbookController.cookbook.code} onChange={action((code) => this.props.editCookbookController.code = code)} />
       <label>Image:</label><input type="file" id="img" name="img" accept="image/*" />
-      {this.props.editCookbookController.isNew ? <button onClick={() => this.props.editCookbookController.addCookbook()}>Add New Cookbook</button> :
-        <button onClick={() => this.props.editCookbookController.updateCookbook()}>Update Cookbook</button>}
+      {this.props.editCookbookController.isNew ? <button onClick={() => {
+        this.props.editCookbookController.addCookbook();
+        this.props.onCommit && this.props.onCommit(this.props.editCookbookController.cookbook);
+      }}>Add New Cookbook</button> :
+        <button onClick={() => {
+          this.props.editCookbookController.updateCookbook();
+          this.props.onCommit && this.props.onCommit(this.props.editCookbookController.cookbook);
+          }}>Update Cookbook</button>}
     </div>
   }
 }
@@ -49,15 +56,15 @@ export class EditCookbookController {
   }
 
   addCookbook() {
-    this.cookbook.name = this.name || "";
-    this.cookbook.code = this.code || "";
+    this.cookbook.name = this.name || this.cookbook.name;
+    this.cookbook.code = this.code || this.cookbook.code;
     TresLechesSession.getInstance().addNewCookbook(this.cookbook);
   }
 
   updateCookbook() {
-    this.cookbook.name = this.name || "";
-    this.cookbook.code = this.code || "";
-    //TresLechesSession.getInstance().addNewCookbook(this.cookbook);
+    this.cookbook.name = this.name || this.cookbook.name;
+    this.cookbook.code = this.code || this.cookbook.code;
+    TresLechesSession.getInstance().updateCookbook(this.cookbook);
   }
 
 }
