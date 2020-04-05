@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Dialog, { DialogProps } from './Dialog';
 import { observable, action } from 'mobx';
 import { Observer } from 'mobx-react';
