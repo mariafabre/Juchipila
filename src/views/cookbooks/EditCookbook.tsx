@@ -24,9 +24,9 @@ export class EditCookbook extends React.Component<EditCookbookProps> {
   render() {
     return <div className="form cookbook">
       <label>Name:</label><TextInput placeholder="Cookbook Name"
-        value={this.props.editCookbookController.name || this.props.editCookbookController.cookbook.name} onChange={action((name) => this.props.editCookbookController.name = name)} />
+        value={this.props.editCookbookController.name} onChange={action((name) => this.props.editCookbookController.name = name)} />
       <label>Code:</label><TextInput placeholder={this.props.editCookbookController.generateCode === '' ? 'Three Char Code' : this.props.editCookbookController.generateCode}
-        value={this.props.editCookbookController.code || this.props.editCookbookController.cookbook.code} onChange={action((code) => this.props.editCookbookController.code = code)} maxLength={3} />
+        value={this.props.editCookbookController.code} onChange={action((code) => this.props.editCookbookController.code = code)} maxLength={3} />
       <label>Image:</label><input type="file" id="img" name="img" accept="image/*" />
       {this.props.editCookbookController.isNew 
         ? <button onClick={() => {
@@ -51,6 +51,8 @@ export class EditCookbookController {
   constructor(cookbook?: Cookbook) {
     if (cookbook) {
       this.cookbook = cookbook;
+      this.name = cookbook.name;
+      this.code = cookbook.code;
     } else {
       this.cookbook = {} as Cookbook;
       this.isNew = true;
@@ -90,8 +92,8 @@ export class EditCookbookController {
   }
 
   updateCookbook() {
-    this.cookbook.name = this.name || this.cookbook.name;
-    this.cookbook.code = this.code || this.cookbook.code;
+    this.cookbook.name = this.name;
+    this.cookbook.code = this.code === "" ? this.generateCode : this.code;
     TresLechesSession.getInstance().updateCookbook(this.cookbook);
     DialogManager.getManager().closeDialog('editCookbook');
   }
