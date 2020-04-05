@@ -12,6 +12,8 @@ export interface TextInputProps {
   style?: React.CSSProperties;
   id?: string;
   list?: string;
+  minLength?: number;
+  maxLength?: number;
 }
 
 export class TextInput extends React.Component<TextInputProps> {

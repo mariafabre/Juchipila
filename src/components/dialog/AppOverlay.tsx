@@ -14,7 +14,7 @@ function AppOverlay() {
 
 export class DialogManager {
     private static manager: DialogManager;
-    @observable dialogs: React.ReactNode[] = [];
+    @observable dialogs: Map<string,React.ReactNode> = new Map();
 
     private constructor() {
     }
@@ -28,7 +28,12 @@ export class DialogManager {
 
     @action
     openDialog(props: DialogProps) {
-        this.dialogs.push(<Dialog {...props}/>);
+        this.dialogs.set(props.key, <Dialog {...props}/>);
+    }
+
+    @action
+    closeDialog(key: string) {
+        this.dialogs.delete(key);
     }
 }
 
