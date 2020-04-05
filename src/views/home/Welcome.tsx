@@ -1,8 +1,13 @@
 import React from 'react';
 import { Card } from '../../components/panels/Card';
 import './Welcome.css';
+import { EditCookbook, EditCookbookController } from '../cookbooks/EditCookbook';
 
 export class Welcome extends React.Component {
+    addCookbook() {
+      EditCookbook.addCookbook({editCookbookController: new EditCookbookController()});
+    }
+    
     render() {
       return <div className="welcome">
         <div className="welcome-panel">
@@ -12,6 +17,7 @@ export class Welcome extends React.Component {
             <li><Card title="Cookbook 2"/></li>
             <li><Card title="Cookbook 3"/></li>
           </ul>
+          <button onClick={this.addCookbook}>Add New Cookbook</button>
           <br />
           <label>Top Recipes</label>
           <ul id="recipes">

@@ -9,6 +9,7 @@ export interface Cookbook extends BaseObject {
     recipes: Recipe[];
     code: string;
     license?: string;
+    image?: string;
 }
 
 export interface Recipe extends BaseObject {
