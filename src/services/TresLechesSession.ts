@@ -21,12 +21,22 @@ export class TresLechesSession {
         return TresLechesSession.instance;
     }
 
-    public async signInUser(email: string, password: string) {
-        runInAction(async () => this.user = await this.services.signInUser(email, password));
+    public async signInUser(email: string, password: string): Promise<void> {
+        try {
+            const user = await this.services.signInUser(email, password);
+            runInAction(() => this.user = user);
+        } catch (error) {
+            throw error;
+        }
     }
 
-    public async registerUser(email: string, password: string) {
-        this.user = await this.services.registerUser(email, password);
+    public async registerUser(email: string, password: string): Promise<void> {
+        try {
+            const user = await this.services.registerUser(email, password);
+            runInAction(() => this.user = user);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public addNewCookbook(cookbook: Cookbook): Promise<Cookbook> {

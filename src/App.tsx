@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import './stylesheets/General.css';
-import { LoginBox, LoginBoxController } from './views/login/loginBox';
+import { Login, LoginController } from './views/loginPage/Login';
 import { initializeApp } from 'firebase';
-import { RegistrationBox, RegistrationBoxController } from './views/register/RegistrationBox';
+import { Registration, RegistrationController } from './views/loginPage/Registration';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
@@ -41,11 +41,11 @@ export class LandingView extends React.Component {
   @observable originalIcon: boolean = true;
 
   converterMx = new ConverterController();
-  loginBoxController: LoginBoxController | undefined;
-  registrationBoxController: RegistrationBoxController | undefined;
+  loginBoxController: LoginController | undefined;
+  registrationBoxController: RegistrationController | undefined;
   componentWillMount() {
-    this.loginBoxController = new LoginBoxController();
-    this.registrationBoxController = new RegistrationBoxController();
+    this.loginBoxController = new LoginController();
+    this.registrationBoxController = new RegistrationController();
   }
   render() {
     return <div className="App">
@@ -58,8 +58,8 @@ export class LandingView extends React.Component {
         </div>
         <div>
           {this.showLogin ?
-            <LoginBox controller={this.loginBoxController || new LoginBoxController()} /> :
-            <RegistrationBox controller={this.registrationBoxController || new RegistrationBoxController()} />}
+            <Login controller={this.loginBoxController || new LoginController()} /> :
+            <Registration controller={this.registrationBoxController || new RegistrationController()} />}
         </div>
         <button onClick={() => Converter.displayDialog(this.converterMx)}>
           <Icon source={IconSources.FONTAWESOME} name="fa fa-calculator"/>
