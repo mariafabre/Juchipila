@@ -2,32 +2,36 @@ import React from 'react';
 import { Card } from '../../components/panels/Card';
 import './Welcome.css';
 import { EditCookbook, EditCookbookController } from '../cookbooks/EditCookbook';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { Cookbook } from '../../services/TresLechesModels';
 import { TresLechesSession } from '../../services/TresLechesSession';
 import { observer } from 'mobx-react';
 
 @observer
 export class Welcome extends React.Component {
-  //TODO: For testing purposes, make a controller
-  @observable cookbooks: Cookbook[] = [];
+  public static recentCookbooksCount: number = 3;
 
-  componentWillMount() {
-    TresLechesSession.getInstance().fetchUserCookbooks().then(action((cookbooks) => {
-      this.cookbooks = cookbooks
-    }));
-  }
   addCookbook() {
-    EditCookbook.addCookbook({ editCookbookController: new EditCookbookController()});
+    EditCookbook.addCookbook({
+      editCookbookController: new EditCookbookController(),
+      onCommit: action((cookbook) => {
+        TresLechesSession.getInstance().cookbooks?.push(cookbook);
+      })
+    });
   }
 
   render() {
+    let cookbooks = TresLechesSession.getInstance().cookbooks;
     return <div className="welcome">
       <div className="welcome-panel">
         <label>Most Recient Cookbooks</label>
         <ul id="cookbooks">
-          {this.cookbooks.map((cookbook) => <li><Card title={cookbook.name} image="logo" description={cookbook.code}
-            onClick={() => EditCookbook.editCookbook({ editCookbookController: new EditCookbookController(cookbook), onCommit: action((updatedCB) => cookbook = updatedCB) })} /></li>)}
+          {cookbooks 
+          ? cookbooks.slice(cookbooks.length - Welcome.recentCookbooksCount)
+          .map((cookbook) => <li><Card title={cookbook.name} image="logo" description={cookbook.code}
+            onClick={() => EditCookbook.editCookbook({ editCookbookController: new EditCookbookController(cookbook), onCommit: action((updatedCB) => cookbook = updatedCB) })} /></li>)
+            : null
+          }
         </ul>
         <button onClick={this.addCookbook}>Add New Cookbook</button>
         <br />
