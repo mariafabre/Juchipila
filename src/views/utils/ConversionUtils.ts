@@ -37,7 +37,8 @@ export enum NonSpecificUnitsEnum {
     TOTASTE = "To taste"
 }
 
-export class ConversionUtils {
+export class ConversionUtils {    
+    static validConverterRegex = /^[0-9]*[.]?[0-9]*([/][0-9]*[.]?[0-9]*)?$/;
     static liquidConversionMap: Map<LiquidUnitEnum, number> = new Map([[LiquidUnitEnum.Milliliter, .202884], 
         [LiquidUnitEnum.Liter, 202.884], 
         [LiquidUnitEnum.Teaspoon, 1], 

@@ -19,12 +19,14 @@ export class Registration extends React.Component<RegistrationProps> {
       }}>
         <TextInput type="email" id="email" placeholder="E-mail" value={this.props.controller.username}
           onChange={(value) => this.props.controller.username = value} />
-        <TextInput type="email" id="confirm-email" className={this.props.controller.isConfirmEmailValid ? '' : 'error'} placeholder="Confirm E-mail"
-          onChange={(value) => this.props.controller.confirmUsername = value} />
+        <TextInput type="email" id="confirm-email" placeholder="Confirm E-mail"
+          onChange={(value) => this.props.controller.confirmUsername = value} 
+          hasError={!this.props.controller.isConfirmEmailValid}/>
         <TextInput type="password" id="password" placeholder="Password" value={this.props.controller.password}
           onChange={(value) => this.props.controller.password = value} />
-        <TextInput type="password" id="confirm-password" className={this.props.controller.isConfirmPasswordValid ? '' : 'error'} placeholder="Confirm Password" value={this.props.controller.confirmPassword}
-          onChange={(value) => this.props.controller.confirmPassword = value} />
+        <TextInput type="password" id="confirm-password" placeholder="Confirm Password" value={this.props.controller.confirmPassword}
+          onChange={(value) => this.props.controller.confirmPassword = value} 
+          hasError={!this.props.controller.isConfirmPasswordValid}/>
         <div className="text-error">
           {this.props.controller.error}
         </div>

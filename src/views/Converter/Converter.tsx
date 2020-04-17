@@ -9,15 +9,50 @@ import { DialogManager } from '../../components/dialog/AppOverlay';
 import { IconSources, Icon } from '../../components/Icon';
 
 export class ConverterController {  
-    @observable liquidAmountFrom: number = 1;
+    @observable liquidFrom: string = "1";
     @observable fromLiquidUnit: LiquidUnitEnum = LiquidUnitEnum.Cup;
     @observable toLiquidUnit: LiquidUnitEnum = LiquidUnitEnum.FluidOunce;
     cachedLiquidResult: number = 1;
   
-    @observable solidAmountFrom: number = 1;
+    @observable solidFrom: string = "1";
     @observable fromSolidUnit: SolidUnitEnum = SolidUnitEnum.OUNCE;
     @observable toSolidUnit: SolidUnitEnum = SolidUnitEnum.GRAM;
     cachedSolidResult: number = 1;
+
+    evaluateFraction(fraction: string): number | void {
+      let factors = fraction.split("/").filter((value: string) => value !== "");
+      if (factors.length === 2) {
+        return +factors[0] / +factors[1];
+      } else if (factors.length === 1) {
+        return +factors[0];
+      }
+    }
+
+    @computed
+    get liquidAmountFrom(): number {
+      if (this.invalidLiquidFrom) {
+        return this.cachedLiquidResult;
+      }
+      return this.evaluateFraction(this.liquidFrom) || this.cachedLiquidResult;
+    }
+
+    @computed
+    get invalidLiquidFrom(): boolean {
+      return !ConversionUtils.validConverterRegex.test(this.liquidFrom);
+    }
+
+    @computed
+    get solidAmountFrom(): number {
+      if (this.invalidSolidFrom) {
+        return this.cachedSolidResult;
+      }
+      return this.evaluateFraction(this.solidFrom) || this.cachedSolidResult;
+    }
+
+    @computed
+    get invalidSolidFrom(): boolean {
+      return !ConversionUtils.validConverterRegex.test(this.solidFrom);
+    }
   }
   
   @observer
@@ -28,7 +63,7 @@ export class ConverterController {
     }
   
     @computed 
-    get liquidResult(): number {
+    get liquidResult(): number {      
       this.props.controller.cachedLiquidResult = ConversionUtils.liquidConvertFromTo(this.props.controller.liquidAmountFrom, this.props.controller.fromLiquidUnit, this.props.controller.toLiquidUnit) || this.props.controller.cachedLiquidResult;
       return this.props.controller.cachedLiquidResult;
     }
@@ -72,7 +107,9 @@ export class ConverterController {
             <Icon source={IconSources.FONTAWESOME} name="fa fa-beer"/>
           </div>
           <div className="converter-column-2">
-            <input className="number-input" value={this.props.controller.liquidAmountFrom} onChange={action((event) => this.props.controller.liquidAmountFrom = (event.target.value as any))} />
+            <TextInput className="number-input" value={this.props.controller.liquidFrom} 
+            onChange={action((input) => this.props.controller.liquidFrom = input)} 
+            hasError={this.props.controller.invalidLiquidFrom ? "Invalid characters" : undefined}/>
             <TextInput value={this.props.controller.fromLiquidUnit} onChange={action((value) => this.props.controller.fromLiquidUnit = value as any)} list="liquidUnits" />
           </div>
           <div className="converter-column-3">
@@ -88,7 +125,9 @@ export class ConverterController {
             <Icon source={IconSources.FONTAWESOME} name="fa fa-balance-scale"/>
           </div>
           <div className="converter-column-2">
-            <input className="number-input" value={this.props.controller.solidAmountFrom} onChange={action((event) => this.props.controller.solidAmountFrom = (event.target.value as any))} />
+            <TextInput className="number-input" value={this.props.controller.solidFrom} 
+            onChange={action((input) => this.props.controller.solidFrom = input)} 
+            hasError={this.props.controller.invalidSolidFrom ? "Invalid characters" : undefined}/>
             <TextInput value={this.props.controller.fromSolidUnit} onChange={action((value) => this.props.controller.fromSolidUnit = value as any)} list="solidUnitsFrom" />
           </div>            
           <div className="converter-column-3">
