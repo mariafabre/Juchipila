@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Dialog, { DialogProps } from './Dialog';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { Observer } from 'mobx-react';
 
 function AppOverlay() {
@@ -15,9 +14,14 @@ function AppOverlay() {
 
 export class DialogManager {
     private static manager: DialogManager;
-    @observable dialogs: React.ReactNode[] = [];
+    @observable private _dialogs: Map<string,React.ReactNode> = new Map();
 
     private constructor() {
+    }
+
+    @computed
+    get dialogs(): React.ReactNode[] {
+        return Array.from(this._dialogs.values());
     }
 
     public static getManager(): DialogManager {
@@ -29,7 +33,12 @@ export class DialogManager {
 
     @action
     openDialog(props: DialogProps) {
-        this.dialogs.push(<Dialog {...props}/>);
+        this._dialogs.set(props.key, <Dialog {...props}/>);
+    }
+
+    @action
+    closeDialog(key: string) {
+        this._dialogs.delete(key);
     }
 }
 

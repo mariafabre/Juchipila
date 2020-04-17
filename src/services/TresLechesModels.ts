@@ -8,7 +8,9 @@ export interface BaseObject {
 export interface Cookbook extends BaseObject {
     recipes: Recipe[];
     code: string;
+    date: string;
     license?: string;
+    image?: string;
 }
 
 export interface Recipe extends BaseObject {
@@ -22,6 +24,7 @@ export interface Version extends BaseObject {
     tags: string[];
     notes: string;
     locked: boolean;
+    date: string;
     drinkParings?: DrinkParing[];
 }
 

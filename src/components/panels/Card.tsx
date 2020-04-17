@@ -19,7 +19,7 @@ export interface CardProps {
   stats?: string[];
   style?: React.CSSProperties;
   flat?: boolean;
-  onClick?: () => {};
+  onClick?: () => void;
 }
 
 export class Card extends React.Component<CardProps> {
