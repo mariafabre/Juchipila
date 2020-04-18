@@ -25,16 +25,14 @@ export interface Version extends BaseObject {
     notes: string;
     locked: boolean;
     date: string;
-    drinkParings?: DrinkParing[];
+    drinkIds?: string[];
+    relatedRecipeIds?: string[];
 }
 
 export interface Ingredient extends BaseObject {
     quantity: number;
     unit: LiquidUnitEnum | SolidUnitEnum;
-}
-
-export interface DrinkParing extends BaseObject {
-    href: string;
+    recipeIds: string[];
 }
 
 export interface User {
