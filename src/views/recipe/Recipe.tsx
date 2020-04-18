@@ -1,18 +1,18 @@
 import React from 'react';
 
-export interface RecipebookProps {
-  RecipebooksController: RecipebookController;
+export interface RecipeProps {
+  recipeController: RecipeController;
 }
 
-export class Recipebook extends React.Component<RecipebookProps> {
+export class Recipe extends React.Component<RecipeProps> {
     render() {
-      return <div className="recipebook">
-        <div className="recipebook-panel">
+      return <div className="recipe">
+        <div className="recipe-panel">
         </div>
       </div>
     }
 }
 
-export class RecipebookController {
+export class RecipeController {
 
 }
