@@ -30,6 +30,7 @@ function App() {
         <Route exact path="/" component={() => <LandingView />}/>
         <Route excat path ="/home" component={() => TresLechesSession.getInstance().user ? <Home/> : <Redirect to="/"/>}/>
         <Route excat path ="/cookbook/:id" component={() => TresLechesSession.getInstance().user ? <Home/> : <Redirect to="/"/>}/>
+        {/* <Route excat path ="/recipe" component={() => TresLechesSession.getInstance().user ? <Recipe/> : <Redirect to="/"/>}/> */}
       </Switch>
     </Router>
   );

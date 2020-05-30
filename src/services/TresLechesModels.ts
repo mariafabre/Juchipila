@@ -20,17 +20,21 @@ export interface Recipe extends BaseObject {
 export interface Version extends BaseObject {
     authors: string[];
     ingredients: Ingredient[];
-    instructions: string;
+    instructions: string[];
     tags: string[];
     notes: string;
     locked: boolean;
     date: string;
-    drinkIds?: string[];
-    relatedRecipeIds?: string[];
+    drinkPairings?: Reference[];
+    relatedRecipes?: Reference[];
+}
+
+export interface Reference extends BaseObject {
+    href?: string;
 }
 
 export interface Ingredient extends BaseObject {
-    quantity: number;
+    quantity: string;
     unit: LiquidUnitEnum | SolidUnitEnum;
     recipeIds: string[];
 }

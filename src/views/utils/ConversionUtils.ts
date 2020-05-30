@@ -34,7 +34,8 @@ export enum SolidUnitEnum {
 
 export enum NonSpecificUnitsEnum {
     PINCH = "Pinches",
-    TOTASTE = "To taste"
+    TOTASTE = "To taste",
+    UNIT= "Units"
 }
 
 export class ConversionUtils {    
@@ -87,4 +88,15 @@ export class ConversionUtils {
             return amountFrom * toConv / fromConv;
         }  
     }
+
+    public static evaluateFraction(fraction: string): number | undefined {
+        if (ConversionUtils.validConverterRegex.test(fraction)) {
+          let factors = fraction.split("/").filter((value: string) => value !== "");
+          if (factors.length === 2) {
+            return +factors[0] / +factors[1];
+          } else if (factors.length === 1) {
+            return +factors[0];
+          }
+        }
+      }
 }

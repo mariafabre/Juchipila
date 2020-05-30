@@ -26,3 +26,44 @@ div[class*="converter-row"] {
     border: none;
     border-bottom: 1px solid grey;
 }
+
+.calculator-converter {
+    flex-direction: column;
+}
+
+.calculator-converter input:not(.number-input) {
+    width: 15em;
+}
+
+.calculator-converter input {
+    border: none;
+}
+
+.calc-from {
+    display: flex;
+}
+
+.calculator-converter .number-input {
+    font-size: medium;
+}
+
+.calc-result {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 15px;
+    color: var(--blue);
+}
+
+.type-converter {
+    display: flex;
+}
+
+.type-toggle {
+    border: 3px solid transparent;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+.type-toggle.active {
+    border: 3px solid var(--blue);
+}

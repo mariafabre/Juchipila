@@ -2,14 +2,18 @@ import React from 'react';
 import { Card } from '../../components/panels/Card';
 import './Welcome.css';
 import { EditCookbook, EditCookbookController } from '../cookbooks/EditCookbook';
-import { observable, action, computed } from 'mobx';
-import { Cookbook } from '../../services/TresLechesModels';
+import { action, observable } from 'mobx';
 import { TresLechesSession } from '../../services/TresLechesSession';
 import { observer } from 'mobx-react';
+import { Cookbook, Recipe as RecipeModel } from '../../services/TresLechesModels';
+import { Recipe } from '../recipe/Recipe';
+import { Sidebar } from '../sidebar/Sidebar';
 
 @observer
 export class Welcome extends React.Component {
   public static recentCookbooksCount: number = 3;
+  @observable pickedRecipe: RecipeModel | undefined;
+  @observable pickedCookbook: Cookbook | undefined;
 
   addCookbook() {
     EditCookbook.addCookbook({
@@ -22,9 +26,15 @@ export class Welcome extends React.Component {
 
   render() {
     let cookbooks = TresLechesSession.getInstance().cookbooks;
-    return <div className="welcome">
+    return <div className="content">
+      {cookbooks && <Sidebar cookbooks={cookbooks} onCookbookSelection={action(() => this.pickedRecipe = undefined)} onRecipeSelection={action((cookbook, recipe) => {
+        this.pickedCookbook = cookbook;
+        this.pickedRecipe  = recipe;
+      })}/>}
+      {this.pickedRecipe && this.pickedCookbook ? <Recipe recipe={this.pickedRecipe} cookbook={this.pickedCookbook} /> : 
+      <div className="welcome">
       <div className="welcome-panel">
-        <label>Most Recient Cookbooks</label>
+        <label>Most Recent Cookbooks</label>
         <ul id="cookbooks">
           {cookbooks 
           ? cookbooks.slice(cookbooks.length - Welcome.recentCookbooksCount)
@@ -42,6 +52,8 @@ export class Welcome extends React.Component {
           <li><Card title="Recipes 3" /></li>
         </ul>
       </div>
+      </div>
+  }
     </div>
   }
 }
